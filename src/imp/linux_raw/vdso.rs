@@ -13,12 +13,12 @@
 #![allow(unsafe_code)]
 #![allow(non_snake_case)]
 
+use crate::c_types::{c_char, c_void};
 use crate::io::{self, madvise, pread, proc_self_auxv, Advice};
-use std::ffi::CStr;
-use std::mem::{align_of, size_of};
-use std::os::raw::{c_char, c_void};
-use std::ptr::null;
-use std::slice;
+use crate::std_ffi::CStr;
+use core::mem::{align_of, size_of};
+use core::ptr::null;
+use core::slice;
 
 pub(super) struct Vdso {
     // Load information
@@ -159,7 +159,14 @@ unsafe fn init_from_sysinfo_ehdr(base: usize) -> Option<Vdso> {
         {
             // We can't gracefully fail here because we would seem to have just
             // mutated some unknown memory.
-            std::process::abort();
+            #[cfg(feature = "std")]
+            {
+                std::process::abort();
+            }
+            #[cfg(feature = "no_std_demo")]
+            {
+                core::intrinsics::abort();
+            }
         }
     }
 

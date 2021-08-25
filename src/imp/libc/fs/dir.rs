@@ -1,6 +1,11 @@
 use super::FileType;
 use crate::imp::libc::conv::owned_fd;
 use crate::io::{self, OwnedFd, RawFd};
+use crate::std_ffi::CStr;
+#[cfg(target_os = "wasi")]
+use crate::std_ffi::CString;
+use core::mem::zeroed;
+use core::ptr::NonNull;
 use errno::{errno, set_errno, Errno};
 use io_lifetimes::{AsFd, BorrowedFd, IntoFd};
 #[cfg(not(any(
@@ -17,11 +22,6 @@ use libc::{dirent as libc_dirent, readdir as libc_readdir};
     target_os = "linux"
 ))]
 use libc::{dirent64 as libc_dirent, readdir64 as libc_readdir};
-use std::ffi::CStr;
-#[cfg(target_os = "wasi")]
-use std::ffi::CString;
-use std::mem::zeroed;
-use std::ptr::NonNull;
 
 /// `DIR*`
 #[repr(transparent)]

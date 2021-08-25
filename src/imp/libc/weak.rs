@@ -26,7 +26,7 @@
 #![allow(dead_code, unused_macros)]
 #![allow(clippy::doc_markdown)]
 
-use std::ffi::CStr;
+use crate::std_ffi::CStr;
 use std::sync::atomic::{self, AtomicUsize, Ordering};
 use std::{marker, mem};
 

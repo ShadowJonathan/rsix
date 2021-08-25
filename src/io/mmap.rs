@@ -7,8 +7,8 @@
 #![allow(unsafe_code)]
 
 use crate::{imp, io};
+use core::ffi::c_void;
 use io_lifetimes::AsFd;
-use std::ffi::c_void;
 
 pub use imp::io::{MapFlags, ProtFlags};
 

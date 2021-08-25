@@ -1,7 +1,7 @@
 use super::{Ipv4Addr, Ipv6Addr, SocketAddr, SocketAddrUnix, SocketAddrV4, SocketAddrV6};
 use crate::as_ptr;
+use core::mem::size_of;
 use libc::sockaddr_storage;
-use std::mem::size_of;
 
 // This must match the header of `sockaddr`.
 #[repr(C)]
